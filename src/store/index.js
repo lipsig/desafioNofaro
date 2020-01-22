@@ -16,6 +16,7 @@ export default new Vuex.Store({
       return state.usuarios
     },
     getUsuario: (state) => (id) => {
+      console.log('buscou um');
       return state.usuarios.find(usuarios => usuarios.id === id)
     }
   },
@@ -26,26 +27,30 @@ export default new Vuex.Store({
     },
     DELETE_CAR(state, id){
       state.usuarios.splice(state.usuarios.indexOf(id), 1)
-     }
+     },
+    EDITAR_USUARIO(){
+      
+    }
   },
   //executam mutations
   actions: {
     carregarUsuarios({commit}){
       axios.get('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person').then(data=> {
-        console.log(data.data)
+        console.log("buscou todos")
         let usuarios = data.data
         commit('setEstadoUsuario', usuarios)
       })
     },
-    carregarUsuario(id){
-      
+    editarUsuario(id,nome,email){
+      axios.put(`http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/${id}`, nome,email).then(res => {   
+        console.log(res.data)
+    })
     },
     // addUsuarios(){
     //   axios.post('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person', {
-    //     name:'bruno',
-    //     email:'carlos@gmail.com',
+    //     name:'Barbara',
+    //     email:'Barbara@gmail.com',
     //     data: Date(),
-    //     avatar: '"../assets/avatar.png"'
     //   })
     //  },
     deletarUsuario ({commit}, id) {
@@ -53,7 +58,7 @@ export default new Vuex.Store({
             commit('DELETE_CAR', id)
             console.log("tirou do array")
         })
-    }
+    },
   },
   modules: {
   }

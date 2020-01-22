@@ -117,7 +117,7 @@ export default {
   name: 'HelloWorld',
   mounted(){
     this.$store.dispatch('carregarUsuarios')
-    this.$store.dispatch('addUsuarios')
+    // this.$store.dispatch('addUsuarios')
   },
 
 

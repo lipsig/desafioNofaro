@@ -18,7 +18,7 @@
 
         
         <v-layout pb-5>
-           <v-btn text icon to="/"> <v-icon color="#de3d52">mdi-arrow-left-thick</v-icon></v-btn> <span text-left style="padding-top:5px; color:#de3d52;">Perfil De "Dinamico"</span>
+           <v-btn text icon to="/"> <v-icon color="#de3d52">mdi-arrow-left-thick</v-icon></v-btn> <span text-left style="padding-top:5px; color:#de3d52;">Perfil De {{usuario.name}}</span>
           <v-flex>
          
         </v-flex>
@@ -37,7 +37,7 @@
            
              
                <v-flex text-right>
-                  <v-btn  @click="sdds" to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                  <v-btn  :to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
                 </v-flex>
 
             <tbody>
@@ -76,12 +76,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
+    data: () => ({
+    verPerfilRota: '/verperfil/',
+    editarPerfilRota: '/editar/',
+    dialog:false,
+   
+  }),
 
   computed: {  
    usuario() {
+    console.log("buscou");
    return this.$store.getters.getUsuario(this.$route.params.id)
    }
   }
