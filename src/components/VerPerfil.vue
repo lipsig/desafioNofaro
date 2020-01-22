@@ -32,12 +32,12 @@
           
          
 
-            <v-flex text-left p-10>
+            <v-flex text-left p-10 style="border:red solid 1px;  border-radius: 25px; padding:10px 0px 20% 0px; ">
           
-           <v-simple-table light dense="dense" style="border:red solid 1px;  border-radius: 25px; padding:10px;">
+           
              
                <v-flex text-right>
-                  <v-btn  @click.stop="" to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                  <v-btn  @click="sdds" to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
                 </v-flex>
 
             <tbody>
@@ -60,8 +60,7 @@
             
             
             </tbody>
-     
-        </v-simple-table> 
+    
        </v-flex>
 
       </v-flex>
