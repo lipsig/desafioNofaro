@@ -2,84 +2,96 @@
   <v-container>
     <v-layout
       text-center
-      wrap
+      wrap>   
+      
+      <v-flex xs6 offset-xs3>
+
+      <v-row align="center" justify="center">
+     <v-img
+      src="../assets/logo.jpg"
+      aspect-ratio="1"
+      class="grey lighten-2"
+      max-width="120"
+      max-height="120"
+      >
+     </v-img></v-row>
+
+        
+        <v-layout pb-5>
+           <h3 text-left style="color:#de3d52;">Lista de Pessoas</h3>
+          <v-flex>
+         
+        </v-flex>
+        <v-flex text-right>
+        <v-btn text-center rounded color="#de3d52" dark>
+         + Adicionar Perfil 
+        </v-btn>
+        </v-flex>
+        </v-layout>
+        
+ 
+
+          
+           <v-simple-table light dense="dense" style="border:red solid 1px;  border-radius: 25px; padding:10px;">
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="usuario in usuarios" :key="usuario">
+                <td class="text-left">{{ usuario.name }}</td>
+                <td>{{ usuario.email }}</td>
+                <td> <v-icon>mdi-square-edit-outline</v-icon> <v-icon>mdi-trash-can-outline</v-icon></td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table> 
+       
+
+      </v-flex>
+
+   
+       <v-dialog
+      v-model="dialog"
+      max-width="290"
     >
-      <v-flex xs12>
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        ></v-img>
-      </v-flex>
+      <v-card>
+        <v-card-title class="headline">Use Google's location service?</v-card-title>
 
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
+        <v-card-text>
+          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+        </v-card-text>
 
-      <v-flex
-        mb-5
-        xs12
-      >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
+        <v-card-actions>
+          <v-spacer></v-spacer>
 
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
           >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
+            Disagree
+          </v-btn>
 
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
           >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    
 
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
+  
+      
     </v-layout>
   </v-container>
 </template>
@@ -87,58 +99,26 @@
 <script>
 export default {
   name: 'HelloWorld',
+  created(){
+    this.obterUsuarios();
+  },
 
   data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
+    usuarios:[]
   }),
+
+  methods:{
+    obterUsuarios(){
+      this.$http('/person').then(resp => {
+        this.usuarios = resp.data
+        console.log(resp.data)
+      })
+    },
+    excluir(id) {
+			this.$http.delete(`/person/${id}`).then(console.log("excluido"))
+			}
+				
+		}
+  
 };
 </script>
