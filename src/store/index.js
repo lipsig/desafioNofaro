@@ -14,6 +14,9 @@ export default new Vuex.Store({
   getters: {
     allUsuarios: state => {
       return state.usuarios
+    },
+    getUsuario: (state) => (id) => {
+      return state.usuarios.find(usuarios => usuarios.id === id)
     }
   },
   //set
@@ -34,12 +37,17 @@ export default new Vuex.Store({
         commit('setEstadoUsuario', usuarios)
       })
     },
+    carregarUsuario(id){
+      
+    },
     // addUsuarios(){
     //   axios.post('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person', {
-    //     name:'Carlos',
-    //     email:'carlos@gmail.com'
+    //     name:'bruno',
+    //     email:'carlos@gmail.com',
+    //     data: Date(),
+    //     avatar: '"../assets/avatar.png"'
     //   })
-    // },
+    //  },
     deletarUsuario ({commit}, id) {
       axios.delete('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/' + id).then(() => {              
             commit('DELETE_CAR', id)

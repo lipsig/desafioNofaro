@@ -44,13 +44,13 @@
               
            <td style="padding-left:30px; position:relative; top:-25px;">
             <v-avatar  color="orange" size="80"> 
-            <span class="white--text headline">62</span>
+            <img src="../assets/avatar.png" alt="avatar">
             </v-avatar>
-             <span style="padding-left:15px;">Nome Aqui</span>
+             <span style="padding-left:15px; font-size:24px; color:#de3d52;">{{usuario.name}}</span>
              <div style="padding-left:15px; padding-top:20px; padding-bottom:20%" >
-             <span>Nome:</span><br>
-             <span>Email:</span><br>
-             <span>Data:</span>
+             <span>Nome: {{usuario.name}}</span><br>
+             <span>Email: {{usuario.email}}</span><br>
+             <span>Data de cadastro: </span><span style="font-size:12px;"> {{usuario.data}}</span>
            </div>
  
            </td>
@@ -76,8 +76,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
 
+  computed: {  
+   usuario() {
+   return this.$store.getters.getUsuario(this.$route.params.id)
+   }
+  }
 }
 </script>
 
