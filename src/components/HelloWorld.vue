@@ -29,7 +29,7 @@
         </v-flex>
         </v-layout>     
 
-          <ul v-for="teste in usuarios" :key="teste.id"><li>{{teste.name}}</li></ul>
+         
 
           
            <v-simple-table light dense="dense" style="border:red solid 1px;  border-radius: 25px; padding:10px;">
@@ -42,12 +42,12 @@
                
               </tr>
             </thead>
-            <tbody>
-              <tr v-for="usuario in usuarios" :key="usuario">
+            <tbody to="/test">
+              <router-link tag="tr" v-for="usuario in usuarioOrdem" :key="usuario.id" :to="verPerfilRota+usuario.id" style="cursor:pointer;">
                 <td class="text-left">{{ usuario.name.charAt(0).toUpperCase() + usuario.name.slice(1) }}</td>
                 <td>{{ usuario.email }}</td>
-                <td> <v-btn text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn></td>
-              </tr>
+                <td> <v-btn  @click.stop="" :to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn></td>
+              </router-link>
             
               <v-dialog
       v-model="dialog"
@@ -122,6 +122,8 @@ export default {
 
 
   data: () => ({
+    verPerfilRota: '/verperfil/',
+    editarPerfilRota: '/editar/',
     dialog:false,
     usuarioAlterados:[],
     id:''
