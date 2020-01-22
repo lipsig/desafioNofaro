@@ -23,17 +23,17 @@
          
         </v-flex>
         <v-flex text-right>
-        <v-btn text-center rounded color="#de3d52" dark>
+        <v-btn to="adicionar" text-center rounded color="#de3d52" dark>
          + Adicionar Perfil 
         </v-btn>
         </v-flex>
-        </v-layout>
-        
- 
+        </v-layout>     
+
+          <ul v-for="teste in usuarios" :key="teste.id"><li>{{teste.name}}</li></ul>
 
           
            <v-simple-table light dense="dense" style="border:red solid 1px;  border-radius: 25px; padding:10px;">
-          <template v-slot:default>
+        
             <thead>
               <tr>
                 <th></th>
@@ -44,50 +44,63 @@
             </thead>
             <tbody>
               <tr v-for="usuario in usuarios" :key="usuario">
-                <td class="text-left">{{ usuario.name }}</td>
+                <td class="text-left">{{ usuario.name.charAt(0).toUpperCase() + usuario.name.slice(1) }}</td>
                 <td>{{ usuario.email }}</td>
-                <td> <v-icon>mdi-square-edit-outline</v-icon> <v-icon>mdi-trash-can-outline</v-icon></td>
+                <td> <v-btn text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn></td>
               </tr>
+            
+              <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title style="text-align:center" class="headline"></v-card-title>
+
+        <v-card-text style="text-align:center">
+          Tem certeza que você deseja <br> excluir esse perfil?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-flex>
+          <v-btn align="left"
+            style="text-align:left;"
+            color="red"
+            dark
+            rounded
+            @click="dialog = false; excluir(id);"
+          >
+            Sim
+          </v-btn>
+          </v-flex>
+            <v-flex>
+          <v-btn
+          
+            rounded
+            text
+            @click="dialog = false"
+          >
+            Não
+          </v-btn>
+           </v-flex>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+            
+            
+            
+            
+            
             </tbody>
-          </template>
+     
         </v-simple-table> 
        
 
       </v-flex>
 
    
-       <v-dialog
-      v-model="dialog"
-      max-width="290"
-    >
-      <v-card>
-        <v-card-title class="headline">Use Google's location service?</v-card-title>
-
-        <v-card-text>
-          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Disagree
-          </v-btn>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+       
     
 
   
@@ -97,25 +110,40 @@
 </template>
 
 <script>
+import _ from 'lodash';
+import {mapState, mapGetters} from 'vuex';
+
 export default {
   name: 'HelloWorld',
-  created(){
-    this.obterUsuarios();
+  mounted(){
+    this.$store.dispatch('carregarUsuarios')
+    this.$store.dispatch('addUsuarios')
   },
 
+
   data: () => ({
-    usuarios:[]
+    dialog:false,
+    usuarioAlterados:[],
+    id:''
   }),
 
-  methods:{
-    obterUsuarios(){
-      this.$http('/person').then(resp => {
-        this.usuarios = resp.data
-        console.log(resp.data)
-      })
+  computed:{
+    usuarios(){
+      return this.$store.getters.allUsuarios
     },
+  // ...mapState([
+  //   'usuarios'
+  // ]),
+  ...mapGetters([]),
+  usuarioOrdem: function () {
+    
+    return  _.orderBy(this.usuarios, [usuario => usuario.name.toUpperCase()])
+  },
+
+  },
+  methods:{
     excluir(id) {
-			this.$http.delete(`/person/${id}`).then(console.log("excluido"))
+       this.$store.dispatch('deletarUsuario', id)
 			}
 				
 		}
