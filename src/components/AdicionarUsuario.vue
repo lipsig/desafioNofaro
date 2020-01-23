@@ -90,6 +90,35 @@
       </v-card>
     </v-dialog>
 
+
+         <v-dialog
+      v-model="dialogoerro"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title style="text-align:center" class="headline"></v-card-title>
+
+        <v-card-text style="text-align:center">
+          Prencha Todos os dados corretamente!
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+            <v-flex>
+          <v-btn
+          
+            rounded
+            text
+            @click="dialogoerro = false"
+          >
+            Fechar
+          </v-btn>
+           </v-flex>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -102,17 +131,23 @@ export default {
        email:''
      }
     ,
-    dialog:false
+    dialog:false,
+    dialogoerro:false
   }),
 
     methods:{
     adicionar() {
+      if(this.usuarioNovo.name=="" || this.usuarioNovo.email ==""){
+        this.dialogoerro=true
+      }
+      else{
       console.log(this.usuarioNovo)
       axios.post('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person', this.usuarioNovo).then(()=>{
         this.dialog=true
         
       })
- 
+      }
+
 			}
 
     }

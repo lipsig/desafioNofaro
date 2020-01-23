@@ -122,14 +122,16 @@ export default {
     dialog:false,
     excluirid:''
   }),
-    methods:{
+  methods:{
     excluir(excluirid) {
-       this.$store.dispatch('deletarUsuario', excluirid).then(()=>{
-         this.$router.push( '/' );
+             
+          this.$store.dispatch('deletarUsuario', excluirid).then(()=>{
+          this.$store.dispatch('carregarUsuarios')  
+          this.$router.push( '/' );
        })
 			}
 				
-		},
+    },
   computed: {  
    usuario() {
     console.log(this.$store.getters.getUsuario(this.id));

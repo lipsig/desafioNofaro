@@ -181,7 +181,8 @@ export default {
   methods:{
     excluir(excluirid) {
        this.$store.dispatch('deletarUsuario', excluirid).then(()=>{
-         this.$router.push( '/' );
+          this.$store.dispatch('carregarUsuarios')  
+          this.$router.push( '/' );
        })
 			},
     salvar(){

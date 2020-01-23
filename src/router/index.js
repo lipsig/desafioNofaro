@@ -12,8 +12,9 @@ const routes = [
   {
     path: '/',
     name: 'inicio',
-    component: HelloWorld
-  },
+    component: HelloWorld,
+
+    },
   {
     path: '/verperfil/:id',
     name: 'verperfil',
