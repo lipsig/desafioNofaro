@@ -7,14 +7,13 @@
          
         </v-flex>
         <v-flex text-right>
-        <v-btn to="adicionar" text-center rounded color="#de3d52" dark>
+        <v-btn to="/adicionar" text-center rounded color="#de3d52" dark>
          + Adicionar Perfil 
         </v-btn>
         </v-flex>
         </v-layout>     
 
-         
-
+       
           
            <v-simple-table light dense="dense" style="border:red solid 1px;  border-radius: 25px; padding:10px;">
         
@@ -27,10 +26,11 @@
               </tr>
             </thead>
             <tbody to="/test">
-              <router-link tag="tr" v-for="usuario in usuarioOrdem" :key="usuario.id" :to="verPerfilRota+usuario.id" style="cursor:pointer;">
+              <router-link tag="tr" v-for="usuario in usuariosOrdem" :key="usuario.id" :to="verPerfilRota+usuario.id" style="cursor:pointer;">
+                
                 <td class="text-left">{{ usuario.name.charAt(0).toUpperCase() + usuario.name.slice(1) }}</td>
                 <td>{{ usuario.email }}</td>
-                <td> <v-btn  @click.stop="" :to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn></td>
+                <td> <v-btn  @click.stop="" :to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id  " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn></td>
               </router-link>
             
               <v-dialog
@@ -94,12 +94,14 @@
 
 <script>
 import _ from 'lodash';
-import {mapState, mapGetters} from 'vuex';
+import axios from 'axios'
+import {mapState, mapGetters, Store} from 'vuex';
 
 export default {
   name: 'HelloWorld',
   mounted(){
     this.$store.dispatch('carregarUsuarios')
+   
     // this.$store.dispatch('addUsuarios')
   },
 
@@ -109,6 +111,7 @@ export default {
     editarPerfilRota: '/editar/',
     dialog:false,
     usuarioAlterados:[],
+
     id:''
   }),
 
@@ -120,7 +123,7 @@ export default {
   //   'usuarios'
   // ]),
   ...mapGetters([]),
-  usuarioOrdem: function () {
+  usuariosOrdem: function () {
     
     return  _.orderBy(this.usuarios, [usuario => usuario.name.toUpperCase()])
   },
@@ -128,7 +131,15 @@ export default {
   },
   methods:{
     excluir(id) {
-       this.$store.dispatch('deletarUsuario', id)
+        axios.delete('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/' + id).then(() => {    
+          const index = this.usuarios.findIndex(us => us.id === id)    
+          if (~index) 
+              this.usuarios.splice(index, 1) 
+          
+        })
+     
+
+     
 			}
 				
 		}

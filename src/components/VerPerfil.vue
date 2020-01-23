@@ -10,7 +10,7 @@
          
         </v-flex>
         <v-flex text-right>
-        <v-btn to="adicionar" text-center rounded color="#de3d52" dark>
+        <v-btn to="/adicionar" text-center rounded color="#de3d52" dark>
          + Adicionar Perfil 
         </v-btn>
         </v-flex>
@@ -24,7 +24,7 @@
            
              
                <v-flex text-right>
-                  <v-btn  :to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; id = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                  <v-btn  :to="editarPerfilRota+usuario.id" text icon color="#de3d52"><v-icon>mdi-square-edit-outline</v-icon></v-btn> <v-btn @click.stop="dialog=true; excluirid = usuario.id   " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
                 </v-flex>
 
             <tbody>
@@ -51,6 +51,45 @@
        </v-flex>
 
 
+         <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title style="text-align:center" class="headline"></v-card-title>
+
+        <v-card-text style="text-align:center">
+          Tem certeza que você deseja <br> excluir esse perfil?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-flex>
+          <v-btn align="left"
+            style="text-align:left;"
+            color="red"
+            dark
+            rounded
+            @click="dialog = false; excluir(excluirid);"
+          >
+            Sim
+          </v-btn>
+          </v-flex>
+            <v-flex>
+          <v-btn
+          
+            rounded
+            text
+            @click="dialog = false"
+          >
+            Não
+          </v-btn>
+           </v-flex>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -66,6 +105,7 @@ export default {
         },
     mounted(){
     this.$store.dispatch('carregarUsuarios')
+    
     // this.$store.dispatch('addUsuarios')
   },
   
@@ -80,8 +120,16 @@ export default {
     verPerfilRota: '/verperfil/',
     editarPerfilRota: '/editar/',
     dialog:false,
-   
+    excluirid:''
   }),
+    methods:{
+    excluir(excluirid) {
+       this.$store.dispatch('deletarUsuario', excluirid).then(()=>{
+         this.$router.push( '/' );
+       })
+			}
+				
+		},
   computed: {  
    usuario() {
     console.log(this.$store.getters.getUsuario(this.id));

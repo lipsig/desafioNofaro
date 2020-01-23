@@ -47,13 +47,11 @@ export default new Vuex.Store({
         console.log(res.data)
     })
     },
-    // addUsuarios(){
-    //   axios.post('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person', {
-    //     name:'Barbara',
-    //     email:'Barbara@gmail.com',
-    //     data: Date(),
-    //   })
-    //  },
+    addUsuario(name){
+      axios.post('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person', name ,{ params:{
+        name: this.name
+      }})      
+     },
     deletarUsuario ({commit}, id) {
       axios.delete('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/' + id).then(() => {              
             commit('DELETE_CAR', id)

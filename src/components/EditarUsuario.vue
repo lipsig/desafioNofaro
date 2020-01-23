@@ -9,7 +9,7 @@
          
         </v-flex>
         <v-flex text-right>
-        <v-btn to="adicionar" text-center rounded color="#de3d52" dark>
+        <v-btn to="/adicionar" text-center rounded color="#de3d52" dark>
          + Adicionar Perfil 
         </v-btn>
         </v-flex>
@@ -23,7 +23,7 @@
           
              
                <v-flex text-right pr-5>
-                  <v-btn @click="dialog=true" icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
+                  <v-btn @click="dialog=true; excluirid = usuario.id " icon color="#de3d52"><v-icon>mdi-trash-can-outline</v-icon></v-btn>
                 </v-flex>
 
             <tbody>
@@ -73,6 +73,74 @@
         </v-btn></v-flex>
        </v-flex>
 
+          <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title style="text-align:center" class="headline"></v-card-title>
+
+        <v-card-text style="text-align:center">
+          Tem certeza que você deseja <br> excluir esse perfil?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-flex>
+          <v-btn align="left"
+            style="text-align:left;"
+            color="red"
+            dark
+            rounded
+            @click="dialog = false; excluir(excluirid);"
+          >
+            Sim
+          </v-btn>
+          </v-flex>
+            <v-flex>
+          <v-btn
+          
+            rounded
+            text
+            @click="dialog = false"
+          >
+            Não
+          </v-btn>
+           </v-flex>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    
+          <v-dialog
+        v-model="dialog2"
+       max-width="290"
+    >
+      <v-card>
+        <v-card-title style="text-align:center" class="headline"></v-card-title>
+
+        <v-card-text style="text-align:center">
+          Perfil Alterado Com Sucesso
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-flex>
+       
+          <v-btn
+          
+            rounded
+            text
+            @click="dialog2 = false"
+          >
+            Fechar
+          </v-btn>
+           </v-flex>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
 
   </v-container>
@@ -100,6 +168,9 @@ export default {
   
   data(){
    return {
+      dialog:false,
+      dialog2:false,
+      excluirid:'',
      usuarioEditado:{
        name:'',
        email:''
@@ -108,31 +179,37 @@ export default {
     }
   },
   methods:{
+    excluir(excluirid) {
+       this.$store.dispatch('deletarUsuario', excluirid).then(()=>{
+         this.$router.push( '/' );
+       })
+			},
     salvar(){
     if(this.usuarioEditado.name == '' && this.usuarioEditado.email == ''){
         axios.put(`http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/${this.usuario.id}`, this.usuario).then(res => {   
         console.log(res.data)
         this.usuario.name=this.usuarioEditado.name
+        this.dialog2=true
     })}
     else if(this.usuarioEditado.name == ''){
         this.usuarioEditado.name = this.usuario.name
         axios.put(`http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/${this.usuario.id}`, this.usuarioEditado).then(res => {   
         console.log(res.data)
         this.usuario.name=this.usuarioEditado.name
-      
+        this.dialog2=true
     })}
     else if(this.usuarioEditado.email==''){
     this.usuarioEditado.email = this.usuario.email
     axios.put(`http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/${this.usuario.id}`, this.usuarioEditado).then(res => {   
     console.log(res.data)
     this.usuario.name=this.usuarioEditado.name
-    
+    this.dialog2=true
     })
       } else{
        axios.put(`http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/${this.usuario.id}`, this.usuarioEditado).then(res => {   
         console.log(res.data)
         this.usuario.name=this.usuarioEditado.name
-      
+       this.dialog2=true
     })
       }
     }
