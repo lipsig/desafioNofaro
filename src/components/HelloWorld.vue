@@ -1,23 +1,7 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap>   
-      
-      <v-flex xs6 offset-xs3>
 
-      <v-row align="center" justify="center">
-     <v-img
-      src="../assets/logo.jpg"
-      aspect-ratio="1"
-      class="grey lighten-2"
-      max-width="120"
-      max-height="120"
-      >
-     </v-img></v-row>
-
-        
-        <v-layout pb-5>
+        <v-container>        
+          <v-layout pb-5>
            <h3 text-left style="color:#de3d52;">Lista de Pessoas</h3>
           <v-flex>
          
@@ -97,16 +81,15 @@
         </v-simple-table> 
        
 
-      </v-flex>
+
 
    
        
-    
+    </v-container>
+
 
   
-      
-    </v-layout>
-  </v-container>
+  
 </template>
 
 <script>
