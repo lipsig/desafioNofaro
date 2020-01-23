@@ -17,7 +17,8 @@ export default new Vuex.Store({
     },
     getUsuario: (state) => (id) => {
       console.log('buscou um');
-      return state.usuarios.find(usuarios => usuarios.id === id)
+      console.log(id)
+      return state.usuarios.find(usuario => usuario.id === id)
     }
   },
   //set

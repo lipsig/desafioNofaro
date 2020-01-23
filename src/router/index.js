@@ -4,6 +4,7 @@ import HelloWorld from '../components/HelloWorld';
 import VerPerfil from '../components/VerPerfil';
 import EditarUsuario from '../components/EditarUsuario';
 
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,14 +24,16 @@ const routes = [
   {
     path: '/verperfil/:id',
     name: 'verperfil',
+    props: true,
     component: VerPerfil
+
 
   },
   {
     path: '/editar/:id',
     name: 'editar',
-    component: EditarUsuario
-
+    component: EditarUsuario,
+    props:true
   },
 ]
 

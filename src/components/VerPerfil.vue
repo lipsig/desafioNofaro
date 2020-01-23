@@ -35,7 +35,7 @@
             </v-avatar>
              <span style="padding-left:15px; font-size:24px; color:#de3d52;">{{usuario.name}}</span>
              <div style="padding-left:15px; padding-top:20px; padding-bottom:20%" >
-             <span>Nome: {{usuario.name}}</span><br>
+             <span>Nome: {{this.usuario.name}}</span><br>
              <span>Email: {{usuario.email}}</span><br>
              <span>Data de cadastro: </span><span style="font-size:12px;"> {{usuario.data}}</span>
            </div>
@@ -57,17 +57,35 @@
 <script>
 
 export default {
+  
+    props: {
+            id: {
+                required: true
+            },
+            // rest of the props if needed
+        },
+    mounted(){
+    this.$store.dispatch('carregarUsuarios')
+    // this.$store.dispatch('addUsuarios')
+  },
+  
+   created () {
+          
+          const usuario = this.$store.getters.getUsuario(this.id)
+   
+        },
+
     data: () => ({
+      
     verPerfilRota: '/verperfil/',
     editarPerfilRota: '/editar/',
     dialog:false,
    
   }),
-
   computed: {  
    usuario() {
-    console.log("buscou");
-   return this.$store.getters.getUsuario(this.$route.params.id)
+    console.log(this.$store.getters.getUsuario(this.id));
+   return this.$store.getters.getUsuario(this.id)
    }
   }
 }

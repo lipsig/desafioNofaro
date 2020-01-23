@@ -18,7 +18,7 @@
           
           
 
-            <v-flex text-left p-10 style="border:red solid 1px;  border-radius: 25px; padding:10px 0px 20% 0px; ">
+            <v-flex text-left p-10 style="border:red solid 1px;  border-radius: 25px; padding:10px 0px 10% 0px; ">
           
           
              
@@ -81,6 +81,23 @@
 <script>
 import axios from 'axios'
 export default {
+    
+    props: {
+            id: {
+                required: true
+            },
+            // rest of the props if needed
+        },
+    mounted(){
+    this.$store.dispatch('carregarUsuarios')
+    // this.$store.dispatch('addUsuarios')
+  },
+     created () {
+          
+          const usuario = this.$store.getters.getUsuario(this.id)
+   
+        },
+  
   data(){
    return {
      usuarioEditado:{
