@@ -1,21 +1,24 @@
 <template>
     <v-container>
         <v-layout pb-5>
+          <v-row>
+            <v-flex xs12lg6 text-left> 
             <v-btn text icon to="/">
                 <v-icon color="#de3d52">mdi-arrow-left-thick</v-icon>
             </v-btn> <span text-left id="labelPerfil">Perfil De {{usuario.name}}</span>
-            <v-flex>
-
             </v-flex>
-            <v-flex text-right>
+            <v-flex xs12lg6 text-right>
                 <v-btn to="/adicionar" text-center rounded color="#de3d52" dark>
                     + Adicionar Perfil
                 </v-btn>
             </v-flex>
+            </v-row>
         </v-layout>
 
-        <v-flex text-left p-10 id="acoes">
-            <v-flex text-right>
+        <v-layout xs12>
+         <v-flex text-left p-10 id="acoes">
+           <v-row>
+            <v-flex xs12 text-right>
                 <v-btn :to="editarPerfilRota+usuario.id" text icon color="#de3d52">
                     <v-icon>mdi-square-edit-outline</v-icon>
                 </v-btn>
@@ -23,7 +26,9 @@
                     <v-icon>mdi-trash-can-outline</v-icon>
                 </v-btn>
             </v-flex>
+           </v-row>
 
+         
             <tbody>
                 <td id="conteudo">
                     <v-avatar color="orange" size="80">
@@ -39,8 +44,11 @@
                     </div>
                 </td>
             </tbody>
+  
 
         </v-flex>
+        </v-layout>
+ 
         <v-dialog v-model="dialog" max-width="290">
             <v-card>
                 <v-card-title style="text-align:center" class="headline"></v-card-title>

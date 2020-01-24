@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 
-
 Vue.use(Vuex,axios)
 
 export default new Vuex.Store({
@@ -26,12 +25,9 @@ export default new Vuex.Store({
     setEstadoUsuario(state, usuarios){
       state.usuarios = usuarios
     },
-    DELETE_CAR(state, id){
+    deletar_usuario(state, id){
       state.usuarios.splice(state.usuarios.indexOf(id), 1)
-     },
-    EDITAR_USUARIO(){
-      
-    }
+     }
   },
   //executam mutations
   actions: {
@@ -54,7 +50,7 @@ export default new Vuex.Store({
      },
     deletarUsuario ({commit}, id) {
       axios.delete('http://5c9d09be3be4e30014a7d331.mockapi.io/nofaro/api/v1/person/' + id).then(() => {              
-            commit('DELETE_CAR', id)
+            commit('deletar_usuario', id)
             console.log("tirou do array")
         })
     },

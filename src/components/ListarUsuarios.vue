@@ -1,14 +1,16 @@
 <template>
     <v-container>
         <v-layout pb-5>
+            <v-row>
+            <v-flex  xs12lg6 pl-2 text-left>
             <h3 text-left id="listaLabel">Lista de Pessoas</h3>
-            <v-flex>
             </v-flex>
-            <v-flex text-right>
+            <v-flex xs12lg6 text-right>
                 <v-btn to="/adicionar" text-center rounded color="#de3d52" dark>
                     + Adicionar Perfil
                 </v-btn>
             </v-flex>
+            </v-row>
         </v-layout>
 
         <v-simple-table id="tabela" light dense="dense">

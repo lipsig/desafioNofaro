@@ -2,17 +2,18 @@
     <v-container>
 
         <v-layout pb-5>
+           <v-row>
+            <v-flex xs12lg6 text-left> 
             <v-btn text icon to="/">
                 <v-icon color="#de3d52">mdi-arrow-left-thick</v-icon>
             </v-btn> <span text-left id="labelPerfil">Editar Perfil</span>
-            <v-flex>
-
             </v-flex>
-            <v-flex text-right>
+            <v-flex xs12lg6 text-right>
                 <v-btn to="/adicionar" text-center rounded color="#de3d52" dark>
                     + Adicionar Perfil
                 </v-btn>
             </v-flex>
+            </v-row>
         </v-layout>
 
         <v-flex text-left p-10 style="border:red solid 1px;  border-radius: 25px; padding:10px 0px 10% 0px; ">
@@ -22,7 +23,7 @@
                     <v-icon>mdi-trash-can-outline</v-icon>
                 </v-btn>
             </v-flex>
-
+            <v-flex pr-10>
             <tbody>
                 <td id="conteudo">
                     <v-avatar color="orange" size="80">
@@ -42,8 +43,9 @@
                         </v-col>
                     </div>
                 </td>
-
+          
             </tbody>
+            </v-flex>   
             <v-flex xs4 offset-xs4 style="text-align:center;">
                 <v-btn @click="salvar" small text-center rounded color="#de3d52" dark>
                     Salvar
@@ -186,7 +188,7 @@
       padding-top:5px; color:#de3d52;
     }
     .input{
-      padding:10px 0px 0px 0px;
+      padding:10px 0px 10px 0px;
     }
     #conteudo{
       padding-left:30px; position:relative; top:-25px;

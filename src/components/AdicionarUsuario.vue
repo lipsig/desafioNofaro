@@ -1,12 +1,15 @@
 <template>
     <v-container>
         <v-layout pb-5>
+          <v-row>
+            <v-flex xs12 text-left>
             <v-btn text icon to="/">
                 <v-icon color="#de3d52">mdi-arrow-left-thick</v-icon>
             </v-btn> <span text-left id="labelPerfil">Novo Perfil</span>
-
+            </v-flex>
+        </v-row>
         </v-layout>
-        
+
         <v-flex text-left p-10 id="acoes">
             <tbody>
                 <td id="menuEdicao">
@@ -100,7 +103,7 @@
   padding-top:5px; color:#de3d52;
   }
   #acoes{
-  border:red solid 1px;  border-radius: 25px; padding:10px 0px 20% 0px; 
+  border:red solid 1px;  border-radius: 25px; padding:10px 10% 20% 0px; 
   }
   #menuEdicao{
   padding-left:30px; position:relative;
