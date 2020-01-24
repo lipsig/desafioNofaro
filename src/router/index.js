@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HelloWorld from '../components/HelloWorld';
+import ListarUsuarios from '../components/ListarUsuarios';
 import VerPerfil from '../components/VerPerfil';
 import EditarUsuario from '../components/EditarUsuario';
 import AdicionarUsuario from '../components/AdicionarUsuario';
@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'inicio',
-    component: HelloWorld,
+    component: ListarUsuarios,
 
     },
   {
